@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>WebGL</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="webgl.css" type="text/css">
+  </head>
+
+  <body>
+    <div id="control">
+<a href="javascript: startVehicleViewerIII();">III</a>
+<a href="javascript: startVehicleViewerVC();">VC</a>
+<a href="javascript: startVehicleViewerSA();">SA</a>
+    </div>
+    <canvas id="glcanvas" width="640" height="480" style="float:left"></canvas>
+    <div style="float:left">
+      <select id="objects" size="25">
+        <!-- JS inserts models here -->
+      </select>
+    </div>
+    <table id="colors" style="float:left">
+      <!-- JS inserts colors here -->
+    </table>
+    <div style="display:table;">
+      <ul id="frames">
+        <!-- JS inserts frames here -->
+      </ul>
+    </div>
+    <div style="clear:both;"></div>
+
+  </body>
+
+
+  <script src="gl-matrix.js"></script>
+  <script src="gl-util.js"></script>
+  <script src="rw.js"></script>
+  <script src="rwrender.js"></script>
+  <script src="shaders.js"></script>
+  <script src="rwstream.js"></script>
+  <script src="main.js"></script>
+  <script src="loaddata.js"></script>
+  <script>
+InitRW();
+
+function
+startVehicleViewerIII()
+{
+  DataDirPath = "iii/data";
+  ModelsDirPath = "iii/models";
+  TexturesDirPath = "iii/textures";
+  loadCar = loadCarIII;
+  loadVehicleViewer("default.ide", function() {
+    SelectModel("cheetah");
+  });
+}
+
+function
+startVehicleViewerVC()
+{
+  DataDirPath = "vc/data";
+  ModelsDirPath = "vc/models";
+  TexturesDirPath = "vc/textures";
+  loadCar = loadCarVC;
+  loadVehicleViewer("default.ide", function() {
+    SelectModel("cheetah");
+  });
+}
+
+function
+startVehicleViewerSA()
+{
+  DataDirPath = "sa/data";
+  ModelsDirPath = "sa/models";
+  TexturesDirPath = "sa/textures";
+  loadCar = loadCarSA;
+  loadVehicleViewer("vehicles.ide", function() {
+    SelectModel("cheetah");
+  });
+}
+
+startVehicleViewerIII();
+  </script>
+</html>

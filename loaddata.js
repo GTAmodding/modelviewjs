@@ -68,6 +68,14 @@ SelectModel(model)
 	SetCarColors(CurrentModel.colors[0]);
 
 	loadCar(model + ".dff");
+
+	window.location.hash = currentGame + '/' + model;
+}
+
+function
+SelectModelByID(modelID) {
+	model = ModelInfos[modelID];
+	SelectModel(model.model);
 }
 
 function

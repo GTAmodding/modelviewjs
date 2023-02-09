@@ -1,7 +1,144 @@
-canvas {
-	border: 2px solid black;
-	background-color: black;
+html {
+	height: 100%;
 }
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+a {
+	color: black;
+}
+
+body, canvas {
+	background-color: #808080;
+}
+
 video {
 	display: none;
+}
+
+#objects {
+	outline: none;
+	height: calc(100% - 18.4px);
+	width: 110px;
+	border: unset;
+}
+
+.select-panel {
+	position: absolute;
+	float: left;
+	height: 100%;
+}
+
+#control {
+	text-align: center;
+}
+
+.objects-wrapper {
+	float: left;
+	height: 100%;
+	width: calc(100%);
+}
+
+.viewer-panel {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+option {
+	padding-left: 5px;
+	font-size: 14px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+option:hover {
+	cursor: pointer;
+}
+
+#colors {
+	position: absolute;
+	bottom: 20px;
+	left: 130px;
+
+	/*background-color: todo;*/
+	border-radius: 2px;
+	padding: 5px;
+}
+
+#colors td {
+	border: 1px solid white;
+}
+
+#colors td:hover {
+	cursor: pointer;
+}
+
+.frames-wrapper {
+	position: absolute;
+	top: 0;
+	right: 100px;
+}
+
+.bottom-links {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	margin: 0;
+}
+
+.bottom-links ul {
+	list-style-type: none;
+}
+
+.bottom-links li {
+	float: left;
+	margin-left: 10px;
+	list-style-type: none;
+}
+
+.custom-colors {
+	position: absolute;
+	bottom: 210px;
+	left: 130px;
+}
+
+.custom-colors input:hover {
+	cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark)
+{
+	body, canvas {
+		background-color: #181818;
+	}
+
+	body, a, #objects {
+		color: #f5f5f5;
+	}
+
+	#objects {
+		background-color: #292929;
+	}
+
+	option:checked, option:hover {
+		background-color: #4f4f4f !important;
+	}
+
+	#colors, .custom-colors input {
+		background-color: #343434;
+	}
+
+	#colors td {
+		border: 1px solid white;
+	}
+
+	.custom-colors input {
+		border-radius: 2px;
+	}
 }

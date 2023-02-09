@@ -36,11 +36,18 @@ video {
 
 #control {
 	text-align: center;
+	background-color: white;
+	color: black;
+	font-family: Arial;
+	font-size: 18px;
+	font-weight: bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
 .objects-wrapper {
 	float: left;
-	height: 100%;
+	height: calc(100% - 15px);
 	width: calc(100%);
 }
 
@@ -66,7 +73,6 @@ option:hover {
 	bottom: 20px;
 	left: 130px;
 
-	/*background-color: todo;*/
 	border-radius: 2px;
 	padding: 5px;
 }
@@ -112,21 +118,29 @@ option:hover {
 	cursor: pointer;
 }
 
+#control a {
+	text-decoration: none;
+}
+
+#control a:hover, #control a.active {
+	text-decoration: underline;
+}
+
 @media (prefers-color-scheme: dark)
 {
 	body, canvas {
 		background-color: #181818;
 	}
 
-	body, a, #objects {
-		color: #f5f5f5;
+	body, a, #objects, option {
+		color: #f5f5f5 !important;
 	}
 
 	#objects {
 		background-color: #292929;
 	}
 
-	option:checked, option:hover {
+	option:checked, option:hover, .option:active {
 		background-color: #4f4f4f !important;
 	}
 
@@ -140,5 +154,14 @@ option:hover {
 
 	.custom-colors input {
 		border-radius: 2px;
+	}
+
+	#objects option:nth-child(2n) {
+		background-color: #2e2e2e;
+	}
+
+	#control {
+		background-color: #292929;
+		color: #f5f5f5;
 	}
 }

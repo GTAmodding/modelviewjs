@@ -30,9 +30,9 @@
 
     <div class="select-panel ui">
       <div id="control">
-        <a href="javascript: startVehicleViewerIII(defaultModel);">III</a>
-        <a href="javascript: startVehicleViewerVC(defaultModel);">VC</a>
-        <a href="javascript: startVehicleViewerSA(defaultModel);">SA</a>
+        <a id="game-select-iii" href="javascript: startVehicleViewerIII(defaultModel);">III</a> | 
+        <a id="game-select-vc" href="javascript: startVehicleViewerVC(defaultModel);">VC</a> | 
+        <a id="game-select-sa" href="javascript: startVehicleViewerSA(defaultModel);">SA</a>
       </div>
       
       <div class="objects-wrapper">
@@ -86,6 +86,9 @@ startVehicleViewerIII(model)
     else {
       SelectModel(model);
     }
+
+    uiSetCurrentGame("iii");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 
@@ -104,6 +107,9 @@ startVehicleViewerVC(model)
     else {
       SelectModel(model);
     }
+  
+    uiSetCurrentGame("vc");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 
@@ -122,6 +128,9 @@ startVehicleViewerSA(model)
     else {
       SelectModel(model);
     }
+
+    uiSetCurrentGame("sa");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 

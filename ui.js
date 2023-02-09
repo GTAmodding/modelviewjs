@@ -78,3 +78,24 @@ function(e) {
   }
 },
 false);
+
+function
+uiSetCurrentGame(game) {
+  document.querySelectorAll("#control a").forEach((v) => {
+    v.classList.remove("active");
+  });
+
+  let gameSelect = document.getElementById("game-select-" + game);
+  gameSelect.classList.add("active");
+}
+
+function
+uiSetCurrentModel(model) {
+  let l = document.querySelectorAll("#objects option");
+  for(let i = 0; i < l.length; i++) {
+    if(l[i].value === model) {
+      l[i].selected = 'selected';
+      break;
+    }
+  }
+}

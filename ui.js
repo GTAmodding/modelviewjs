@@ -1,14 +1,16 @@
 showInterface = true;
 autoRotateCamera = false;
 
-function hex2rgb(hex) {
+function
+hex2rgb(hex) {
   let r = parseInt(hex.slice(1, 3), 16);
   let g = parseInt(hex.slice(3, 5), 16);
   let b = parseInt(hex.slice(5, 7), 16);
   return [r, g, b];
 }
   
-function updateVehicleCustomColors() {
+function
+updateVehicleCustomColors() {
   let colors = [];
   for(let i = 0; i < 4; i++) {
     let cStr = document.getElementById("custom-color" + i).value;

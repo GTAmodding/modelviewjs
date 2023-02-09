@@ -376,7 +376,7 @@ processVehicle(clump)
 		   f.name.endsWith("_vlo"))
 			a.visible = false;
 
-		if(f.name === "wheel") {
+		if(!wheel && f.name.startsWith("wheel")) {
 			wheel = a;
 		}
 		

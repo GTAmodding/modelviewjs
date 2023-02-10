@@ -14,7 +14,15 @@ SetCarColors(cols)
 	];
 	if(cols !== undefined)
 		for(let i = 0; i < cols.length; i++){
-			let col = VehicleColours[cols[i]];
+			// GTA color ID
+			let colorID = cols[i];
+
+			// RGB color
+			let col = VehicleColours[colorID];
+			if(!col) {
+				continue;
+			}
+
 			carColors[i][0] = col[0];
 			carColors[i][1] = col[1];
 			carColors[i][2] = col[2];

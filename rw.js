@@ -270,6 +270,20 @@ RpAtomicCreate()
 }
 
 function
+RpAtomicClone(a)
+{
+	let a2 = RpAtomicCreate();
+	a2.type = a.type;
+	a2.visible = a.visible;
+	a2.frame = RwFrameClone(a.frame);
+	a2.geometry = a.geometry;
+	a2.pipeline = a.pipeline;
+	a2.frame.objects = [];
+	a2.frame.objects[0] = a2;
+	return a2;
+}
+
+function
 RpAtomicSetFrame(a, f)
 {
 	a.frame = f;
@@ -486,6 +500,18 @@ rwFrameInit(f)
 		m[9], m[10], m[11], 1);
 	f.ltm = mat4.create();
 	mat4.copy(f.ltm, f.matrix);
+}
+
+function
+RwFrameClone(f) {
+	let f2 = RwFrameCreate();
+	mat4.copy(f2.matrix, f.matrix);
+	mat4.copy(f2.ltm, f.ltm);
+	f2.child = f.child;
+	f2.name = f.name;
+	f2.parent = f.parent;
+	f2.root = f.root;
+	return f2;
 }
 
 function

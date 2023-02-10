@@ -1,32 +1,54 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>WebGL</title>
+    <title>GTA Model Viewer</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="webgl.css" type="text/css">
   </head>
 
   <body>
-    <div id="control">
-<a href="javascript: startVehicleViewerIII(defaultModel);">III</a>
-<a href="javascript: startVehicleViewerVC(defaultModel);">VC</a>
-<a href="javascript: startVehicleViewerSA(defaultModel);">SA</a>
+    <div class="viewer-panel">
+      <canvas id="glcanvas"></canvas>
+
+      <table class="ui" id="colors">
+        <!-- JS inserts colors here -->
+      </table>
+
+      <div class="frames-wrapper ui">
+        <ul id="frames">
+          <!-- JS inserts frames here -->
+        </ul>
+      </div>
+
+      <div class="custom-colors ui">
+        <input type="color" id="custom-color0">
+        <input type="color" id="custom-color1">
+        <input type="color" id="custom-color2">
+        <input type="color" id="custom-color3">
+      </div>
     </div>
-    <canvas id="glcanvas" width="640" height="480" style="float:left"></canvas>
-    <div style="float:left">
-      <select id="objects" size="25">
-        <!-- JS inserts models here -->
-      </select>
+
+    <div class="select-panel ui">
+      <div id="control">
+        <a id="game-select-iii" href="javascript: startVehicleViewerIII(defaultModel);">III</a> | 
+        <a id="game-select-vc" href="javascript: startVehicleViewerVC(defaultModel);">VC</a> | 
+        <a id="game-select-sa" href="javascript: startVehicleViewerSA(defaultModel);">SA</a>
+      </div>
+      
+      <div class="objects-wrapper">
+        <select id="objects" size="25">
+          <!-- JS inserts models here -->
+        </select>
+      </div>
     </div>
-    <table id="colors" style="float:left">
-      <!-- JS inserts colors here -->
-    </table>
-    <div style="display:table;">
-      <ul id="frames">
-        <!-- JS inserts frames here -->
-      </ul>
-    </div>
-    <div style="clear:both;"></div>
+
+    <ul class="bottom-links ui">
+      <li>Press I to toggle interface</li>
+      <li>|</li>
+      <li>
+        <a href="https://github.com/GTAmodding/modelviewjs" id="source-link" target="blank" rel="noopener">Source code</a>
+      </li>
+    </ul>
 
   </body>
 
@@ -39,6 +61,8 @@
   <script src="rwstream.js"></script>
   <script src="main.js"></script>
   <script src="loaddata.js"></script>
+  <script src="ui.js"></script>
+
   <script>
 var defaultModel = 'cheetah';
 var initialGame = 'iii';
@@ -62,6 +86,9 @@ startVehicleViewerIII(model)
     else {
       SelectModel(model);
     }
+
+    uiSetCurrentGame("iii");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 
@@ -80,6 +107,9 @@ startVehicleViewerVC(model)
     else {
       SelectModel(model);
     }
+  
+    uiSetCurrentGame("vc");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 
@@ -98,6 +128,9 @@ startVehicleViewerSA(model)
     else {
       SelectModel(model);
     }
+
+    uiSetCurrentGame("sa");
+    uiSetCurrentModel(CurrentModel.model);
   });
 }
 
@@ -130,5 +163,5 @@ else if(initialGame === 'vc') {
 else if(initialGame === 'sa') {
   startVehicleViewerSA(initialModel);
 }
-  </script>
+</script>
 </html>

@@ -25,6 +25,8 @@ var defaultProgram;
 var envMapProgram;
 var carPS2Program;
 
+var backgroundColor = [0, 0, 0, 0];
+
 function deg2rad(d) { return d / 180.0 * Math.PI; }
 
 var rotating, zooming;
@@ -81,6 +83,15 @@ InitRW()
 {
 console.log("InitRW()");
 	let canvas = document.querySelector('#glcanvas');
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+	// Get background color from stylesheet
+	var bgColorStr = window.getComputedStyle(canvas, null).getPropertyValue("background-color");
+	bgColorStr = bgColorStr.substring(4, bgColorStr.length-1);
+	backgroundColor = bgColorStr.replace(" ", "").split(",");
+	backgroundColor = [parseFloat(backgroundColor[0])/255, parseFloat(backgroundColor[1])/255, parseFloat(backgroundColor[2])/255, 1.0];
+
 	gl = canvas.getContext('webgl');
 
 	if(!gl){
@@ -160,18 +171,6 @@ displayFrames(frame, parelem)
 }
 
 function
-putControl()
-{
-//	let ctl = document.getElementById('control');
-//	let reloadbtn = document.createElement('input');
-//	reloadbtn.type = "button";
-//	reloadbtn.value = "reload";
-//	reloadbtn.onclick = reload;
-//	ctl.appendChild(reloadbtn);
-}
-
-
-function
 loadCarIII(filename)
 {
 	loadDFF(filename, function(clump){
@@ -203,11 +202,11 @@ loadCarSA(filename)
 		setupSACar(myclump);
 		setVehicleColors(modelinfo,
 			carColors[0], carColors[1], carColors[2], carColors[3]);
-//		setVehicleLightColors(modelinfo,
-//			[ 128, 0, 0, 255 ],
-//			[ 128, 0, 0, 255 ],
-//			[ 128, 0, 0, 255 ],
-//			[ 128, 0, 0, 255 ]);
+		setVehicleLightColors(modelinfo,
+			[ 255, 255, 255, 255 ],
+			[ 255, 255, 255, 255 ],
+			[ 255, 255, 255, 255 ],
+			[ 255, 255, 255, 255 ]);
 		main();
 	});
 }
@@ -237,8 +236,6 @@ main()
 
 	if(!running){
 		running = true;
-
-		putControl();
 
 		let then = 0;
 		function render(now){
@@ -309,6 +306,11 @@ setVehicleColors(vehinfo, c1, c2, c3, c4)
 		vehinfo.thirdMaterials[i].color = c3;
 	for(let i = 0; i < vehinfo.fourthMaterials.length; i++)
 		vehinfo.fourthMaterials[i].color = c4;
+
+	if(c1) document.getElementById("custom-color0").value = RGB2HTML(c1);
+	if(c2) document.getElementById("custom-color1").value = RGB2HTML(c2);
+	if(c3) document.getElementById("custom-color2").value = RGB2HTML(c3);
+	if(c4) document.getElementById("custom-color3").value = RGB2HTML(c4);
 }
 
 function
@@ -362,6 +364,10 @@ processVehicle(clump)
 		fourthLightMaterials: [],	// back right
 		clump: clump
 	};
+
+	// Wheel atomic to clone
+	let wheel = null;
+	
 	for(let i = 0; i < clump.atomics.length; i++){
 		a = clump.atomics[i];
 		f = a.frame;
@@ -369,17 +375,41 @@ processVehicle(clump)
 		   f.name.endsWith("_lo") ||
 		   f.name.endsWith("_vlo"))
 			a.visible = false;
+
+		if(!wheel && f.name.startsWith("wheel")) {
+			wheel = a;
+		}
+		
 		findEditableMaterials(a.geometry, vehicleInfo);
 	}
+	
+	// Clone wheels
+	let frame = clump.frame.child;
+	while(wheel && frame) {
+		if(["wheel_rb_dummy", "wheel_rm_dummy", "wheel_lf_dummy", "wheel_lb_dummy", "wheel_lm_dummy"].includes(frame.name)) {
+			let wheel2 = RpAtomicClone(wheel);
+			mat4.copy(wheel2.frame.ltm, frame.ltm);
+			if(["wheel_lf_dummy", "wheel_lb_dummy", "wheel_lm_dummy"].includes(frame.name)) {
+				// Rotate cloned wheel
+				mat4.rotate(wheel2.frame.ltm, wheel2.frame.ltm, Math.PI, [0, 0, 1]);
+			}
+			frame.child = wheel2.frame;
+			clump.atomics.push(wheel2);
+		}
+		frame = frame.next;
+	}
+
 	return vehicleInfo;
 }
 
 function
 drawScene(deltaTime)
 {
-//	camYaw += deltaTime;
+	if(window.autoRotateCamera) {
+		camYaw += deltaTime * 0.9;
+	}
 
-	gl.clearColor(0.5, 0.5, 0.5, 1.0);
+	gl.clearColor(backgroundColor[0], backgroundColor[1], backgroundColor[2], 1.0);
 	gl.clearDepth(1.0);
 	gl.enable(gl.DEPTH_TEST);
 	gl.depthFunc(gl.LEQUAL);
@@ -427,4 +457,17 @@ loadDFF(filename, cb)
 	};
 
 	req.send(null);
+}
+
+function
+rgbToCSSString(r, g, b)
+{
+	return ["rgb(",r,",",g,",",b,")"].join("");
+}
+
+function
+RGB2HTML(color)
+{
+    let decColor = 0x1000000 + color[2] + 0x100 * color[1] + 0x10000 * color[0];
+    return '#' + decColor.toString(16).substr(1);
 }

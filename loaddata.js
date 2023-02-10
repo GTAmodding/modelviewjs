@@ -14,7 +14,15 @@ SetCarColors(cols)
 	];
 	if(cols !== undefined)
 		for(let i = 0; i < cols.length; i++){
-			let col = VehicleColours[cols[i]];
+			// GTA color ID
+			let colorID = cols[i];
+
+			// RGB color
+			let col = VehicleColours[colorID];
+			if(!col) {
+				continue;
+			}
+
 			carColors[i][0] = col[0];
 			carColors[i][1] = col[1];
 			carColors[i][2] = col[2];
@@ -54,7 +62,16 @@ SelectModel(model)
 			let td = document.createElement('td');
 			td.width = "16px";
 			td.height = "16px";
-			let col = VehicleColours[c[j]];
+			
+			// GTA color ID
+			let colorID = c[j];
+
+			// RGB color
+			let col = VehicleColours[colorID];
+			if(!col) {
+				continue;
+			}
+
 			td.style = "background-color: rgb("+col[0]+","+col[1]+","+col[2]+")";
 			tr.appendChild(td);
 		}

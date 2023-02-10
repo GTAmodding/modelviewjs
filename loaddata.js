@@ -54,7 +54,16 @@ SelectModel(model)
 			let td = document.createElement('td');
 			td.width = "16px";
 			td.height = "16px";
-			let col = VehicleColours[c[j]];
+			
+			// GTA color ID
+			let colorID = c[j];
+
+			// RGB color
+			let col = VehicleColours[colorID];
+			if(!col) {
+				continue;
+			}
+
 			td.style = "background-color: rgb("+col[0]+","+col[1]+","+col[2]+")";
 			tr.appendChild(td);
 		}
